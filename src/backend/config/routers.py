@@ -29,6 +29,7 @@ class RouterName(StrEnum):
     SNAPSHOT = "snapshot"
     MODEL = "model"
     SCIM = "scim"
+    FEEDBACK = "feedback"
 
 
 class DependencyType(StrEnum):
@@ -171,4 +172,16 @@ ROUTER_DEPENDENCIES = {
             Depends(ScimAuthValidation()),
         ],
     },
+    RouterName.FEEDBACK: {
+        DependencyType.DEFAULT: [
+            Depends(get_session),
+            Depends(validate_user_header),
+            Depends(validate_organization_header),
+        ],
+        DependencyType.AUTH: [
+            Depends(get_session),
+            Depends(validate_authorization),
+            Depends(validate_organization_header),
+        ],
+    }
 }

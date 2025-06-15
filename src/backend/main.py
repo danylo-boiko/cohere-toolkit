@@ -25,6 +25,7 @@ from backend.routers.chat import router as chat_router
 from backend.routers.conversation import router as conversation_router
 from backend.routers.deployment import router as deployment_router
 from backend.routers.experimental_features import router as experimental_feature_router
+from backend.routers.feedback import router as feedback_router
 from backend.routers.model import router as model_router
 from backend.routers.organization import router as organization_router
 from backend.routers.scim import SCIMException, scim_exception_handler
@@ -75,6 +76,7 @@ def create_app() -> FastAPI:
         tool_router,
         deployment_router,
         experimental_feature_router,
+        feedback_router,
         agent_router,
         snapshot_router,
         organization_router,
