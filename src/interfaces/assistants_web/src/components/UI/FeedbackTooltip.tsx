@@ -107,7 +107,7 @@ export const FeedbackTooltip: React.FC<FeedbackTooltipProps> = ({ children, opti
       {selection && (
         <div
           ref={tooltipRef}
-          className="fixed z-50 flex gap-1.5 whitespace-nowrap rounded-xl bg-mushroom-900 p-1.5 shadow-xl dark:bg-volcanic-200"
+          className="fixed z-50 flex gap-1.5 p-1.5 whitespace-nowrap rounded-xl bg-mushroom-900 shadow-xl dark:bg-volcanic-200"
           style={{
             top: selection.tooltipPosition.y,
             left: selection.tooltipPosition.x,
