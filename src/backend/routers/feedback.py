@@ -36,6 +36,9 @@ def create_message_feedback(
     if not message:
         raise HTTPException(status_code=404, detail="The message does not exist or belongs to another user.")
 
+    if request.end_index >= len(message.text):
+        raise HTTPException(status_code=400, detail="The end index is out of range.")
+
     message_feedback = MessageFeedback(
         message_id=message.id,
         user_id=ctx.get_user_id(),

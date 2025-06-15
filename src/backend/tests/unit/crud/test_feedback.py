@@ -19,7 +19,9 @@ def message(session: Session, user: User) -> Message:
     )
 
 
-def test_create_message_feedback(session: Session, message: Message, user: User) -> None:
+def test_create_message_feedback(
+    session: Session, message: Message, user: User
+) -> None:
     message_feedback = MessageFeedback(
         message_id=message.id,
         user_id=user.id,
@@ -41,7 +43,9 @@ def test_create_message_feedback(session: Session, message: Message, user: User)
     assert session.get(MessageFeedback, created_message_feedback.id) is not None
 
 
-def test_fail_create_message_feedback_with_invalid_indices(session: Session, message: Message, user: User) -> None:
+def test_fail_create_message_feedback_with_invalid_indices(
+    session: Session, message: Message, user: User
+) -> None:
     message_feedback = MessageFeedback(
         message_id=message.id,
         user_id=user.id,
@@ -54,7 +58,9 @@ def test_fail_create_message_feedback_with_invalid_indices(session: Session, mes
         feedback_crud.create_message_feedback(session, message_feedback)
 
 
-def test_fail_create_message_feedback_with_negative_start_index(session: Session, message: Message, user: User) -> None:
+def test_fail_create_message_feedback_with_negative_start_index(
+    session: Session, message: Message, user: User
+) -> None:
     message_feedback = MessageFeedback(
         message_id=message.id,
         user_id=user.id,
@@ -67,7 +73,9 @@ def test_fail_create_message_feedback_with_negative_start_index(session: Session
         feedback_crud.create_message_feedback(session, message_feedback)
 
 
-def test_fail_create_message_feedback_with_nonexistent_message(session: Session, user: User) -> None:
+def test_fail_create_message_feedback_with_nonexistent_message(
+    session: Session, user: User
+) -> None:
     message_feedback = MessageFeedback(
         message_id="nonexistent_message",
         user_id=user.id,
@@ -80,7 +88,9 @@ def test_fail_create_message_feedback_with_nonexistent_message(session: Session,
         feedback_crud.create_message_feedback(session, message_feedback)
 
 
-def test_fail_create_message_feedback_with_nonexistent_user(session: Session, message: Message) -> None:
+def test_fail_create_message_feedback_with_nonexistent_user(
+    session: Session, message: Message
+) -> None:
     message_feedback = MessageFeedback(
         message_id=message.id,
         user_id="nonexistent_user",
