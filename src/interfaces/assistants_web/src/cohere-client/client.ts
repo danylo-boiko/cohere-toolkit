@@ -9,6 +9,7 @@ import {
   CohereNetworkError,
   CohereUnauthorizedError,
   CreateAgentRequest,
+  CreateMessageFeedbackRequest,
   CreateSnapshotRequest,
   CreateUserV1UsersPostData,
   Fetch,
@@ -330,6 +331,10 @@ export class CohereClient {
 
   public deleteAgent(request: { agentId: string }) {
     return this.cohereService.agent.deleteAgentV1AgentsAgentIdDelete(request);
+  }
+
+  public createMessageFeedback(requestBody: CreateMessageFeedbackRequest) {
+    return this.cohereService.feedback.createMessageFeedbackV1FeedbackMessagePost({ requestBody });
   }
 
   public generateTitle({ conversationId }: { conversationId: string }) {
