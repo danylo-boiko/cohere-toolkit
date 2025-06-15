@@ -610,6 +610,28 @@ export type CreateGroup = {
 };
 
 /**
+ * Request schema for providing feedback on a specific part of a message.
+ */
+export type CreateMessageFeedbackRequest = {
+  /**
+   * The unique identifier of the message.
+   */
+  message_id: string;
+  /**
+   * The starting position (inclusive) of the rated text segment in the message.
+   */
+  start_index: number;
+  /**
+   * The ending position (inclusive) of the rated text segment in the message.
+   */
+  end_index: number;
+  /**
+   * The numerical score representing the feedback for the text segment.
+   */
+  rating: number;
+};
+
+/**
  * Request to create an organization
  */
 export type CreateOrganization = {
@@ -1144,6 +1166,40 @@ export enum MessageAgent {
   USER = 'USER',
   CHATBOT = 'CHATBOT',
 }
+
+/**
+ * Schema for message feedback.
+ */
+export type MessageFeedback = {
+  /**
+   * The unique identifier of the message feedback.
+   */
+  id: string;
+  /**
+   * The timestamp when the feedback was created.
+   */
+  created_at: string;
+  /**
+   * The timestamp when the feedback was last updated.
+   */
+  updated_at: string;
+  /**
+   * The unique identifier of the message.
+   */
+  message_id: string;
+  /**
+   * The starting position (inclusive) of the rated text segment in the message.
+   */
+  start_index: number;
+  /**
+   * The ending position (inclusive) of the rated text segment in the message.
+   */
+  end_index: number;
+  /**
+   * The numerical score representing the feedback for the text segment.
+   */
+  rating: number;
+};
 
 /**
  * Schema for metadata
@@ -2673,6 +2729,20 @@ export type ListExperimentalFeaturesV1ExperimentalFeaturesGetResponse = {
   [key: string]: boolean;
 };
 
+export type CreateMessageFeedbackV1FeedbackMessagePostData = {
+  /**
+   * Authorization header containing Bearer token
+   */
+  authorization?: string | null;
+  /**
+   * Unique Identifier for the Organization making the request
+   */
+  organizationId?: string | null;
+  requestBody: CreateMessageFeedbackRequest;
+};
+
+export type CreateMessageFeedbackV1FeedbackMessagePostResponse = MessageFeedback;
+
 export type CreateAgentV1AgentsPostData = {
   /**
    * Unique Identifier for the Organization making the request
@@ -3690,6 +3760,21 @@ export type $OpenApiTs = {
         200: {
           [key: string]: boolean;
         };
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError;
+      };
+    };
+  };
+  '/v1/feedback/message': {
+    post: {
+      req: CreateMessageFeedbackV1FeedbackMessagePostData;
+      res: {
+        /**
+         * Successful Response
+         */
+        200: MessageFeedback;
         /**
          * Validation Error
          */

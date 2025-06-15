@@ -20,6 +20,8 @@ import type {
   CreateDeploymentV1DeploymentsPostResponse,
   CreateGroupScimV2GroupsPostData,
   CreateGroupScimV2GroupsPostResponse,
+  CreateMessageFeedbackV1FeedbackMessagePostData,
+  CreateMessageFeedbackV1FeedbackMessagePostResponse,
   CreateModelV1ModelsPostData,
   CreateModelV1ModelsPostResponse,
   CreateOrganizationV1OrganizationsPostData,
@@ -1213,6 +1215,41 @@ export class ExperimentalFeaturesService {
       headers: {
         'Organization-Id': data.organizationId,
       },
+      errors: {
+        422: 'Validation Error',
+      },
+    });
+  }
+}
+
+export class FeedbackService {
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
+
+  /**
+   * Create Message Feedback
+   * Create a new message feedback.
+   *
+   * Raises:
+   * HTTPException: If the message with the given ID does not exist or belongs to another user.
+   * @param data The data for the request.
+   * @param data.requestBody
+   * @param data.authorization Authorization header containing Bearer token
+   * @param data.organizationId Unique Identifier for the Organization making the request
+   * @returns MessageFeedback Successful Response
+   * @throws ApiError
+   */
+  public createMessageFeedbackV1FeedbackMessagePost(
+    data: CreateMessageFeedbackV1FeedbackMessagePostData
+  ): CancelablePromise<CreateMessageFeedbackV1FeedbackMessagePostResponse> {
+    return this.httpRequest.request({
+      method: 'POST',
+      url: '/v1/feedback/message',
+      headers: {
+        authorization: data.authorization,
+        'Organization-Id': data.organizationId,
+      },
+      body: data.requestBody,
+      mediaType: 'application/json',
       errors: {
         422: 'Validation Error',
       },
