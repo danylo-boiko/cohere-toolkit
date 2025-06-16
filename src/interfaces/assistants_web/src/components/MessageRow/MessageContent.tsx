@@ -6,6 +6,8 @@ import { PropsWithChildren } from 'react';
 import { Markdown } from '@/components/Markdown';
 import { CitationTextHighlighter, DataTable, MarkdownImage } from '@/components/MessageRow';
 import { Icon, Skeleton, Text } from '@/components/UI';
+import { FeedbackTooltip } from '@/components/UI/FeedbackTooltip';
+import { useMessageFeedback } from '@/hooks/use-messageFeedback';
 import {
   type ChatMessage,
   MessageType,
@@ -31,6 +33,7 @@ export const MessageContent: React.FC<Props> = ({ isLast, message, onRetry }) =>
   const isUserError = isUser && message.error;
   const isAborted = isAbortedMessage(message);
   const isTypingOrFulfilledMessage = isFulfilledOrTypingMessage(message);
+  const { feedbackOptions, sendFeedback } = useMessageFeedback();
 
   if (isUserError) {
     return (
@@ -130,20 +133,28 @@ export const MessageContent: React.FC<Props> = ({ isLast, message, onRetry }) =>
 
   const hasCitations =
     isTypingOrFulfilledMessage && message.citations && message.citations.length > 0;
+
   return (
     <MessageWrapper>
-      <Markdown
-        className={cn({
-          'text-volcanic-400': isAborted,
-        })}
-        text={message.text}
-        customComponents={{
-          img: MarkdownImage as any,
-          cite: CitationTextHighlighter as any,
-          table: DataTable as any,
-        }}
-        renderLaTex={!hasCitations}
-      />
+      <FeedbackTooltip
+        options={feedbackOptions}
+        onSend={(startIndex: number, endIndex: number, rating: number) =>
+          sendFeedback(message.id!, startIndex, endIndex, rating)
+        }
+      >
+        <Markdown
+          className={cn({
+            'text-volcanic-400': isAborted,
+          })}
+          text={message.text}
+          customComponents={{
+            img: MarkdownImage as any,
+            cite: CitationTextHighlighter as any,
+            table: DataTable as any,
+          }}
+          renderLaTex={!hasCitations}
+        />
+      </FeedbackTooltip>
       {isAborted && (
         <MessageInfo>
           This generation was stopped.{' '}

@@ -9,6 +9,7 @@ import { ConversationService } from './services.gen';
 import { DefaultService } from './services.gen';
 import { DeploymentService } from './services.gen';
 import { ExperimentalFeaturesService } from './services.gen';
+import { FeedbackService } from './services.gen';
 import { ModelService } from './services.gen';
 import { OrganizationService } from './services.gen';
 import { ScimService } from './services.gen';
@@ -26,6 +27,7 @@ export class CohereClientGenerated {
   public readonly default: DefaultService;
   public readonly deployment: DeploymentService;
   public readonly experimentalFeatures: ExperimentalFeaturesService;
+  public readonly feedback: FeedbackService;
   public readonly model: ModelService;
   public readonly organization: OrganizationService;
   public readonly scim: ScimService;
@@ -62,6 +64,7 @@ export class CohereClientGenerated {
     this.default = new DefaultService(this.request);
     this.deployment = new DeploymentService(this.request);
     this.experimentalFeatures = new ExperimentalFeaturesService(this.request);
+    this.feedback = new FeedbackService(this.request);
     this.model = new ModelService(this.request);
     this.organization = new OrganizationService(this.request);
     this.scim = new ScimService(this.request);

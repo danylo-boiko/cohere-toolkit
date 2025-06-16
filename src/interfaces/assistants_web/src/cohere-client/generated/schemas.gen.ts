@@ -1216,6 +1216,35 @@ export const $CreateGroup = {
   title: 'CreateGroup',
 } as const;
 
+export const $CreateMessageFeedbackRequest = {
+  properties: {
+    message_id: {
+      type: 'string',
+      title: 'Message ID',
+      description: 'The unique identifier of the message.',
+    },
+    start_index: {
+      type: 'integer',
+      title: 'Start Index',
+      description: 'The starting position (inclusive) of the rated text segment in the message.',
+    },
+    end_index: {
+      type: 'integer',
+      title: 'End Index',
+      description: 'The ending position (inclusive) of the rated text segment in the message.',
+    },
+    rating: {
+      type: 'integer',
+      title: 'Rating',
+      description: 'The numerical score representing the feedback for the text segment.',
+    },
+  },
+  type: 'object',
+  required: ['message_id', 'start_index', 'end_index', 'rating'],
+  title: 'CreateMessageFeedbackRequest',
+  description: 'Request schema for providing feedback on a specific part of a message.',
+} as const;
+
 export const $CreateOrganization = {
   properties: {
     name: {
@@ -2158,6 +2187,52 @@ export const $MessageAgent = {
   type: 'string',
   enum: ['USER', 'CHATBOT'],
   title: 'MessageAgent',
+} as const;
+
+export const $MessageFeedback = {
+  properties: {
+    id: {
+      type: 'string',
+      title: 'ID',
+      description: 'The unique identifier of the message feedback.',
+    },
+    created_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Created At',
+      description: 'The timestamp when the feedback was created.',
+    },
+    updated_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updated At',
+      description: 'The timestamp when the feedback was last updated.',
+    },
+    message_id: {
+      type: 'string',
+      title: 'Message ID',
+      description: 'The unique identifier of the message.',
+    },
+    start_index: {
+      type: 'integer',
+      title: 'Start Index',
+      description: 'The starting position (inclusive) of the rated text segment in the message.',
+    },
+    end_index: {
+      type: 'integer',
+      title: 'End Index',
+      description: 'The ending position (inclusive) of the rated text segment in the message.',
+    },
+    rating: {
+      type: 'integer',
+      title: 'Rating',
+      description: 'The numerical score representing the feedback for the text segment.',
+    },
+  },
+  type: 'object',
+  required: ['id', 'created_at', 'updated_at', 'message_id', 'start_index', 'end_index', 'rating'],
+  title: 'MessageFeedback',
+  description: 'Schema for message feedback.',
 } as const;
 
 export const $Meta = {
