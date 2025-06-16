@@ -34,6 +34,18 @@ export const FeedbackTooltip: React.FC<FeedbackTooltipProps> = ({ children, opti
     return range;
   }, []);
 
+  const getRangeIndexes = useCallback((range: Range) => {
+    const globalRange = document.createRange();
+
+    globalRange.setStart(containerRef.current!, 0);
+    globalRange.setEnd(range.startContainer, range.startOffset);
+
+    const start = globalRange.toString().length;
+    const end = start + range.toString().length - 1;
+
+    return { start, end };
+  }, []);
+
   const clearSelection = useCallback(() => {
     setSelection(null);
   }, []);
@@ -46,12 +58,13 @@ export const FeedbackTooltip: React.FC<FeedbackTooltipProps> = ({ children, opti
       return;
     }
 
+    const { start, end } = getRangeIndexes(range);
     const { right, top } = range.getBoundingClientRect();
 
     setSelection({
       range: {
-        start: range.startOffset,
-        end: range.endOffset - 1,
+        start: start,
+        end: end,
       },
       tooltipPosition: {
         x: right,
@@ -107,7 +120,7 @@ export const FeedbackTooltip: React.FC<FeedbackTooltipProps> = ({ children, opti
       {selection && (
         <div
           ref={tooltipRef}
-          className="fixed z-50 flex gap-1.5 p-1.5 whitespace-nowrap rounded-xl bg-mushroom-900 shadow-xl dark:bg-volcanic-200"
+          className="fixed z-50 flex gap-1.5 whitespace-nowrap rounded-xl bg-mushroom-900 p-1.5 shadow-xl dark:bg-volcanic-200"
           style={{
             top: selection.tooltipPosition.y,
             left: selection.tooltipPosition.x,
